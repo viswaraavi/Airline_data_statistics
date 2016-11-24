@@ -18,7 +18,7 @@ except ImportError as e:
 conf = SparkConf().setAppName("DIC FINAL PROJECT")
 sc = SparkContext(conf=conf)
 
-rdd=sc.textFile("/home/viswa/Music/2015.csv")
+rdd=sc.textFile("s3n://csc591-dic-airline-data/0106.csv")
 mapped_rdd=rdd.map(lambda line:line.split(","))
 #USER can specify the airport id here
 filter_19790=mapped_rdd.filter(lambda list1:list1[7]==u'19790')
