@@ -2,9 +2,9 @@ import os
 import sys
 
 
-os.environ['SPARK_HOME'] = "/home/viswa/Downloads/spark-1.6.2-bin-hadoop2.6"
-sys.path.append("/home/viswa/Downloads/spark-1.6.2-bin-hadoop2.6/python")
-sys.path.append("/home/viswa/Downloads/spark-1.6.2-bin-hadoop2.6/python/lib/py4j-0.9-src.zip")
+os.environ['SPARK_HOME'] = "/root/spark"
+sys.path.append("/root/spark/python")
+sys.path.append("/root/spark/python/lib/py4j-0.9-src.zip")
 try:
     from pyspark import SparkContext
     from pyspark import SparkConf
