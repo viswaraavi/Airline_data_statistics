@@ -1,0 +1,15 @@
+./spark-ec2 -k DIC_Key -i DIC_Key.pem -s 5 --region=us-east-1 --zone=us-east-1b  launch dictest-cluster
+
+5 nodes m1.large 580s for 5 first time
+5nodes m1.large 142s for 5 years  second time
+
+15 nodes m1.large 240s for 5 first time
+15 nodes m1.large 32s for 5 years  second time
+
+
+5 nodes m1.large 120s for 1 year first time
+
+
+15 nodes m1.large 64s for 1 first time
+15 nodes m1.large 12s for 1 years  second time
+
