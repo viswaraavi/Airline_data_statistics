@@ -24,8 +24,8 @@ df = sqlContext.read.parquet("s3n://csc591-dic-airline-data/dataset_5years")
 df.registerTempTable("airline_tbl")
 
 df_final = df.select([c for c in df.columns if c in {'YEAR','MONTH','FL_DATE' ,'UNIQUE_CARRIER' ,'CARRIER','FL_NUM','ORIGIN_CITY_NAME','DEST_CITY_NAME','DEP_DELAY_NEW','ARR_DELAY_NEW','CANCELLED','AIR_TIME','CARRIER_DELAY','WEATHER_DELAY','NAS_DELAY','SECURITY_DELAY','LATE_AIRCRAFT_DELAY'}])
-df_final.write.parquet("s3n://csc591-dic-airline-data/reduced_dataset");
-df = sqlContext.read.parquet("s3n://csc591-dic-airline-data/reduced_dataset")
+df_final.write.parquet("s3n://csc591-dic-airline-data/super_reduced_dataset");
+df = sqlContext.read.parquet("s3n://csc591-dic-airline-data/super_reduced_dataset")
 df.registerTempTable("airline_tbl")
 #spark.sql("select * from airline_5 where month = 1 and weather_delay>1")
 
