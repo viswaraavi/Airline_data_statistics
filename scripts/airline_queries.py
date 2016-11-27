@@ -33,15 +33,15 @@ df.createOrReplaceTempView("airline_tbl")
 
 def json_converter_helper(df):
     list1=df.toJSON().collect()
-    list2=[]
+    json_string=""
     for element in list1:
-        list2.append(str(element))
-    return json.dumps(list2)
+        json_string=json_string+str(element)
+    return json.dumps(json_string).strip("\\")
 
 
 def Delay_Statistics(start_date,end_date,carrier=None,origin_city=None,dest_city=None):
     
-    sql_query =  "SELECT SUM(CARRIER_DELAY),SUM(WEATHER_DELAY),SUM(NAS_DELAY),SUM(SECURITY_DELAY),SUM(LATE_AIRCRAFT_DELAY) \
+    sql_query =  "SELECT SUM(CARRIER_DELAY) as carrer_delay,SUM(WEATHER_DELAY) as weather_delay,SUM(NAS_DELAY) as nas_delay,SUM(SECURITY_DELAY) as security_delay,SUM(LATE_AIRCRAFT_DELAY) as late_aircraft \
             FROM airline_tbl\
             WHERE FL_DATE >='"+start_date +"' AND FL_DATE<='" + end_date + "'\
             "
@@ -107,7 +107,7 @@ def query_delay_statistics(start_date,end_date,airline_id=None, origin_city=None
     df=Delay_Statistics(start_date,end_date, airline_id, origin_city, dest_city)
     return json_converter_helper(df)
 
-def query_most_delay_by_carriers(start_date,end_date,,origin_city = None,dest_city = None):
+def query_most_delay_by_carriers(start_date,end_date,origin_city = None,dest_city = None):
     
     df=MostDelaysByCarrier(start_date,end_date,origin_city = None,dest_city = None)
     return json_converter_helper(df)
