@@ -23,7 +23,7 @@ convert(sqlContext,"s3n://csc591-dic-airline-data/201?.csv","","dataset_5years")
 df = sqlContext.read.parquet("s3n://csc591-dic-airline-data/dataset_5years")
 df.registerTempTable("airline_tbl")
 
-df_final = df.select([c for c in df.columns if c in {'YEAR','QUARTER','MONTH','DAY_OF_MONTH','DAY_OF_WEEK','FL_DATE' ,'UNIQUE_CARRIER' ,'AIRLINE_ID' ,'CARRIER','FL_NUM','ORIGIN_AIRPORT_ID','ORIGIN','ORIGIN_CITY_NAME','ORIGIN_STATE_ABR','ORIGIN_STATE_NM','ORIGIN_WAC','DEST_AIRPORT_ID','DEST_AIRPORT_SEQ_ID','DEST_CITY_MARKET_ID','DEST','DEST_CITY_NAME','DEST_STATE_ABR','DEST_STATE_NM','DEST_WAC','CRS_DEP_TIME','DEP_TIME','DEP_DELAY_NEW','ARR_DELAY_NEW','CANCELLED','CANCELLATION_CODE','ACTUAl_ELAPSED_TIME','AIR_TIME','FLIGHTS','DISTANCE','CARRIER_DELAY','WEATHER_DELAY','NAS_DELAY','SECURITY_DELAY','LATE_AIRCRAFT_DELAY'}])
+df_final = df.select([c for c in df.columns if c in {'YEAR','MONTH','FL_DATE' ,'UNIQUE_CARRIER' ,'CARRIER','FL_NUM','ORIGIN_CITY_NAME','DEST_CITY_NAME','DEP_DELAY_NEW','ARR_DELAY_NEW','CANCELLED','AIR_TIME','CARRIER_DELAY','WEATHER_DELAY','NAS_DELAY','SECURITY_DELAY','LATE_AIRCRAFT_DELAY'}])
 df_final.write.parquet("s3n://csc591-dic-airline-data/reduced_dataset");
 df = sqlContext.read.parquet("s3n://csc591-dic-airline-data/reduced_dataset")
 df.registerTempTable("airline_tbl")
