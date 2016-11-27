@@ -1,0 +1,5 @@
+https://www.matthealy.com.au/blog/post/deploying-flask-to-amazon-web-services-ec2/
+
+chmod 777 -R metastore_db
+
+gunicorn -t 1200 app:app -b localhost:8000 &
