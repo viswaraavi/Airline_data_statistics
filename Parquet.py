@@ -79,7 +79,7 @@ def CarrierWithMaximumCancelledFlights(start_date,end_date,origin_city = None,de
     sql_query = sql_query + "GROUP BY CARRIER"
     intermediate_df = spark.sql(sql_query) 
     intermediate_df.registerTempTable("temp_aggregate_tbl")    
-    sql_query = "SELECT CARRIER_NAME, CANCELLED_TOTAL,TOTAL \
+    sql_query = "SELECT CARRIER, CANCELLED_TOTAL,TOTAL \
                 FROM temp_aggregate_tbl\
                 ORDER BY CANCELLED_TOTAL desc\
                 LIMIT 10";   
