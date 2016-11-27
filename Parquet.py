@@ -94,8 +94,7 @@ def CarrierWithMaximumAirTime(start_date,end_date):
     sql_query = sql_query + "ORDER BY Air_Time desc limit 10"
     return spark.sql(sql_query)
 
-Delay_Statistics("2011","2011","1","3").shw
-CarrierWithMaximumCancelledFlights("2011","2011","1","3")
-MostDelaysByCarrier("2011","2011","1","3")
-
-CarrierWithMaximumAirTime("2011","2011","1","3")
+Delay_Statistics("2011-01-01","2011-03-31").show()
+CarrierWithMaximumCancelledFlights("2011-01-01","2011-03-31").show()
+MostDelaysByCarrier("2011-01-01","2011-03-31").show()
+CarrierWithMaximumAirTime("2011-01-01","2011-03-31").show()
