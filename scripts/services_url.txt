@@ -1,3 +1,14 @@
+
+Restful services:
+
+sy = start year
+ey = end year
+sm = start month
+em = end month
+cr = carrier
+oc = origin city
+dc = destination city
+
 Delay statistics:
 
 http://ec2-54-226-213-231.compute-1.amazonaws.com/delay_statistics/?sy=2011&ey=2011&sm=1&em=2&cr=ER&oc=Raleigh&dc=Seattle
