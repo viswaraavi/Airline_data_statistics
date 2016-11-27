@@ -30,10 +30,8 @@ df.registerTempTable("airline_tbl")
 #spark.sql("select * from airline_5 where month = 1 and weather_delay>1")
 
 
-def Delay_Statistics(start_year,end_year,start_month,end_month,carrier=None,origin_city=None,dest_city=None):
-    #returns (Arrival_delay,departure_delay,career_delay,weather_delay,nas_delay,sec_delay,late_aircraft_delay)
-    start_date =  start_year + "-" + start_month + "-01"
-    end_date = end_year+"-" + end_month + "-31"
+def Delay_Statistics(start_date,end_date,carrier=None,origin_city=None,dest_city=None):
+    
     sql_query =  "SELECT SUM(CARRIER_DELAY),SUM(WEATHER_DELAY),SUM(NAS_DELAY),SUM(SECURITY_DELAY),SUM(LATE_AIRCRAFT_DELAY) \
             FROM airline_tbl\
             WHERE FL_DATE >='"+start_date +"' AND FL_DATE<='" + end_date + "'\
@@ -46,9 +44,8 @@ def Delay_Statistics(start_year,end_year,start_month,end_month,carrier=None,orig
         sql_query = sql_query + " AND DEST_CITY_NAME = '" + dest_city + "'";
     return spark.sql(sql_query)    
 
-def MostDelaysByCarrier(start_year,end_year,start_month,end_month,origin_city = None,dest_city = None):
-    start_date =  start_year + "-" + start_month + "-01"
-    end_date = end_year+"-" + end_month + "-31"
+def MostDelaysByCarrier(start_date,end_date,origin_city = None,dest_city = None):
+   
     sql_query =  "SELECT CARRIER_NAME,AVG(ARR_DELAY_NEW) as ARR_DELAY_AVG , AVG(DEP_DELAY_NEW) AS DEP_DELAY_AVG \
             FROM airline_tbl\
             WHERE FL_DATE >='"+start_date +"' AND FL_DATE<='" + end_date + "'\
@@ -68,10 +65,9 @@ def MostDelaysByCarrier(start_year,end_year,start_month,end_month,origin_city = 
     return spark.sql(sql_query)    
 
 
-def CarrierWithMaximumCancelledFlights(start_year,end_year,start_month,end_month,origin_city = None,dest_city = None):
+def CarrierWithMaximumCancelledFlights(start_date,end_date,origin_city = None,dest_city = None):
     #returns carrier, cancelled_total, total
-    start_date =  start_year + "-" + start_month + "-01"
-    end_date = end_year+"-" + end_month + "-31"
+ 
     sql_query =  "SELECT CARRIER_NAME, SUM(CANCELLED) as CANCELLED_TOTAL,COUNT(1) AS TOTAL \
             FROM airline_tbl\
             WHERE FL_DATE >='"+start_date +"' AND FL_DATE<='" + end_date + "'\
@@ -90,9 +86,8 @@ def CarrierWithMaximumCancelledFlights(start_year,end_year,start_month,end_month
     
     return spark.sql(sql_query)      
 
-def CarrierWithMaximumAirTime(start_year,end_year,start_month,end_month):
-    start_date =  start_year + "-" + start_month + "-01"
-    end_date = end_year+"-" + end_month + "-31"
+def CarrierWithMaximumAirTime(start_date,end_date,start_month,end_month):
+   
     sql_query =  "SELECT CARRIER_NAME, Air_Time, FL_NUM , ORIGIN_CITY_NAME ,DEST_CITY_NAME \
             FROM airline_tbl\
             WHERE FL_DATE >='"+start_date +"' AND FL_DATE<='" + end_date + "'"
