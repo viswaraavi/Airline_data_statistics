@@ -57,7 +57,7 @@ def MostDelaysByCarrier(start_date,end_date,origin_city = None,dest_city = None)
     sql_query = sql_query + "GROUP BY CARRIER"
     intermediate_df = spark.sql(sql_query) 
     intermediate_df.registerTempTable("temp_aggregate_tbl")    
-    sql_query = "SELECT CARRIER_NAME, ARR_DELAY_AVG,DEP_DELAY_AVG \
+    sql_query = "SELECT CARRIER, ARR_DELAY_AVG,DEP_DELAY_AVG \
                 FROM temp_aggregate_tbl\
                 ORDER BY ARR_DELAY_AVG desc\
                 LIMIT 10";
@@ -86,7 +86,7 @@ def CarrierWithMaximumCancelledFlights(start_date,end_date,origin_city = None,de
     
     return spark.sql(sql_query)      
 
-def CarrierWithMaximumAirTime(start_date,end_date,start_month,end_month):
+def CarrierWithMaximumAirTime(start_date,end_date):
    
     sql_query =  "SELECT CARRIER, Air_Time, FL_NUM , ORIGIN_CITY_NAME ,DEST_CITY_NAME \
             FROM airline_tbl\
