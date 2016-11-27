@@ -46,7 +46,7 @@ def Delay_Statistics(start_date,end_date,carrier=None,origin_city=None,dest_city
 
 def MostDelaysByCarrier(start_date,end_date,origin_city = None,dest_city = None):
    
-    sql_query =  "SELECT CARRIER_NAME,AVG(ARR_DELAY_NEW) as ARR_DELAY_AVG , AVG(DEP_DELAY_NEW) AS DEP_DELAY_AVG \
+    sql_query =  "SELECT CARRIER,AVG(ARR_DELAY_NEW) as ARR_DELAY_AVG , AVG(DEP_DELAY_NEW) AS DEP_DELAY_AVG \
             FROM airline_tbl\
             WHERE FL_DATE >='"+start_date +"' AND FL_DATE<='" + end_date + "'\
           "
@@ -68,7 +68,7 @@ def MostDelaysByCarrier(start_date,end_date,origin_city = None,dest_city = None)
 def CarrierWithMaximumCancelledFlights(start_date,end_date,origin_city = None,dest_city = None):
     #returns carrier, cancelled_total, total
  
-    sql_query =  "SELECT CARRIER_NAME, SUM(CANCELLED) as CANCELLED_TOTAL,COUNT(1) AS TOTAL \
+    sql_query =  "SELECT CARRIER, SUM(CANCELLED) as CANCELLED_TOTAL,COUNT(1) AS TOTAL \
             FROM airline_tbl\
             WHERE FL_DATE >='"+start_date +"' AND FL_DATE<='" + end_date + "'\
           "
@@ -88,7 +88,7 @@ def CarrierWithMaximumCancelledFlights(start_date,end_date,origin_city = None,de
 
 def CarrierWithMaximumAirTime(start_date,end_date,start_month,end_month):
    
-    sql_query =  "SELECT CARRIER_NAME, Air_Time, FL_NUM , ORIGIN_CITY_NAME ,DEST_CITY_NAME \
+    sql_query =  "SELECT CARRIER, Air_Time, FL_NUM , ORIGIN_CITY_NAME ,DEST_CITY_NAME \
             FROM airline_tbl\
             WHERE FL_DATE >='"+start_date +"' AND FL_DATE<='" + end_date + "'"
     sql_query = sql_query + "ORDER BY Air_Time desc limit 10"
