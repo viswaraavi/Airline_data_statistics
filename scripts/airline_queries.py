@@ -41,6 +41,7 @@ def json_converter_helper(df):
         count = count + 1
         if count < len(list1):
             json_string = json_string + ","
+    print json_string
     return json.dumps(json_string).replace("\\","")
 
 
@@ -105,7 +106,7 @@ def CarrierWithMaximumAirTime(start_date,end_date):
     sql_query =  "SELECT CARRIER, Air_Time, FL_NUM , ORIGIN_CITY_NAME ,DEST_CITY_NAME \
             FROM airline_tbl\
             WHERE FL_DATE >='"+start_date +"' AND FL_DATE<='" + end_date + "'"
-    sql_query = sql_query + "ORDER BY Air_Time desc limit 10"
+    sql_query = sql_query + "ORDER BY CAST(Air_Time AS INT) desc limit 10"
     return spark.sql(sql_query)
 
 def query_delay_statistics(start_date,end_date,airline_id=None, origin_city=None, dest_city=None):
