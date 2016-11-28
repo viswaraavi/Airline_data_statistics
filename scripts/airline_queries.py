@@ -2,6 +2,7 @@
 import sys
 import os
 import json
+import re
 os.environ['SPARK_HOME'] = "/usr/lib/spark"
 sys.path.append("/usr/lib/spark/python")
 sys.path.append("/usr/lib/spark/python/lib/py4j-0.10.3-src.zip")
@@ -34,9 +35,13 @@ df.createOrReplaceTempView("airline_tbl")
 def json_converter_helper(df):
     list1=df.toJSON().collect()
     json_string=""
+    count = 0
     for element in list1:
         json_string=json_string+str(element)
-    return json.dumps(json_string).strip("\\")
+        count = count + 1
+        if count < len(list1):
+            json_string = json_string + ","
+    return json.dumps(json_string).replace("\\","")
 
 
 def Delay_Statistics(start_date,end_date,carrier=None,origin_city=None,dest_city=None):
