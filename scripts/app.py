@@ -99,5 +99,13 @@ def get_delay_month():
     return airline_queries.query_most_delays_by_months(origin_city, destination_city)
 
 
+@app.route('/delay_predict/', methods=['GET'])
+def get_delay_predict():
+    date = request.args.get('sd')
+    origin_city = request.args.get('oc')
+    destination_city = request.args.get('dc')
+    carrier = request.args.get('cr')
+    return airline_queries.delay_prediction(date, carrier, origin_city, destination_city)
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -121,6 +121,12 @@ def MostDelaysByMonth(origin_city=None, dest_city=None):
 
     return spark.sql(sql_query)
 
+def prediction(start_date, carrier, source, destination):
+    # rdd=spark.paraellize([month,day_of_month,day_of_week,carrier,source,destination,1000])
+    # prediction=model.predict(rdd)
+    # return json.dumps([prediction.collect()])
+    return json.dumps([0])
+
 
 def query_delay_statistics(start_date, end_date, airline_id=None, origin_city=None, dest_city=None):
     df = Delay_Statistics(start_date, end_date, airline_id, origin_city, dest_city)
@@ -146,12 +152,6 @@ def query_most_delays_by_months(origin_city=None, dest_city=None):
     df = MostDelaysByMonth(origin_city=None, dest_city=None)
     return json_converter_helper(df)
 
-
-def prediction(month, day_of_month, day_of_week, carrier, source, destination):
-    # rdd=spark.paraellize([month,day_of_month,day_of_week,carrier,source,destination,1000])
-    # prediction=model.predict(rdd)
-    # return json.dumps([prediction.collect()])
-    return json.dumps([0])
 
 
 
