@@ -30,3 +30,15 @@ Carriers with maximum air time
 
 
 http://ec2-54-226-213-231.compute-1.amazonaws.com/air_time/?sd=2011-01-01&ed=2011-03-31
+
+
+Most delays by month
+
+http://ec2-54-226-213-231.compute-1.amazonaws.com/delay_month/&oc=&dc=
+
+
+Delay prediction
+
+http://ec2-54-226-213-231.compute-1.amazonaws.com/delay_predict/?sd=2011-01-01&oc=&dc=&cr=
+
+
