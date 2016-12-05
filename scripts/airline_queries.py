@@ -2,6 +2,9 @@ import sys
 import os
 import json
 import re
+import pickle
+import time
+from datetime import date
 
 os.environ['SPARK_HOME'] = "/usr/lib/spark"
 sys.path.append("/usr/lib/spark/python")
@@ -13,6 +16,8 @@ try:
     from pyspark.sql import HiveContext
     from pyspark.sql import SparkSession
     from pyspark.sql.types import *
+    from pyspark.mllib.tree import RandomForest, RandomForestModel
+    from pyspark.mllib.util import MLUtils
 except ImportError as e:
     print ("error importing spark modules", e)
     sys.exit(1)
@@ -26,12 +31,21 @@ spark = SparkSession.builder \
 # sqlContext=HiveContext(spark)
 
 
-df = spark.read.parquet("s3n://csc591-dic-airline-data/super_reduced_dataset")
+#for 5 years data
+#df = spark.read.parquet("s3n://csc591-dic-airline-data/super_reduced_dataset")
+
+#for full dataset
+df = spark.read.parquet("s3n://csc591-dic-airline-data/super_reduced_dataset_all")
+
 df.createOrReplaceTempView("airline_tbl")
 
 
 # model=RandomForestModel.load(spark, "target/tmp/myRandomForestRegressionModel")
 
+model=RandomForestModel.load(spark, "s3n://csc591-dic-airline-data/randomforestmodel")
+carries_list=pickle.load(open("carriers","rb"))
+source_list=pickle.load(open("source","rb"))
+destination_list=pickle.load(open("destination","rb"))
 
 
 def json_converter_helper(df):
@@ -125,7 +139,17 @@ def delay_prediction(start_date, carrier, source, destination):
     # rdd=spark.paraellize([month,day_of_month,day_of_week,carrier,source,destination,1000])
     # prediction=model.predict(rdd)
     # return json.dumps([prediction.collect()])
-    return json.dumps([0])
+   # return json.dumps([0])
+    date_list=start_date.split("-")
+    month=date_list[1]
+    day_of_month=date_list[2]
+    day_of_week=date(int(date_list[0]),int(date_list[1]), int(date_list[2])).weekday()
+    carrier=carries_list[carrier]
+    source=source_list[source]
+    destination=destination_list[destination]
+    rdd=[int(month),int(day_of_month), int(day_of_week),carrier,source,destination,1000]
+    prediction=model.predict(rdd)
+    return json.dumps([prediction])
 
 
 def query_delay_statistics(start_date, end_date, carrier=None, origin_city=None, dest_city=None):
@@ -134,12 +158,12 @@ def query_delay_statistics(start_date, end_date, carrier=None, origin_city=None,
 
 
 def query_most_delay_by_carriers(start_date, end_date, origin_city=None, dest_city=None):
-    df = MostDelaysByCarrier(start_date, end_date, origin_city=None, dest_city=None)
+    df = MostDelaysByCarrier(start_date, end_date, origin_city, dest_city)
     return json_converter_helper(df)
 
 
 def query_carriers_with_max_CF(start_date, end_date, origin_city=None, dest_city=None):
-    df = CarrierWithMaximumCancelledFlights(start_date, end_date, origin_city=None, dest_city=None)
+    df = CarrierWithMaximumCancelledFlights(start_date, end_date, origin_city, dest_city)
     return json_converter_helper(df)
 
 
@@ -149,10 +173,7 @@ def query_carriers_with_max_airtime(start_date, end_date):
 
 
 def query_most_delays_by_months(origin_city=None, dest_city=None):
-    df = MostDelaysByMonth(origin_city=None, dest_city=None)
+    df = MostDelaysByMonth(origin_city, dest_city)
     return json_converter_helper(df)
 
-
-
-
-
+#print delay_prediction("2015-12-4","DL","JFK","BOS")
