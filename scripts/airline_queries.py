@@ -114,7 +114,7 @@ def MostDelaysByMonth(origin_city=None, dest_city=None):
     sql_query = "SELECT MONTH, AVG(ARR_DELAY_NEW) as ARR_DELAY_AVG , AVG(DEP_DELAY_NEW) AS DEP_DELAY_AVG \
             FROM airline_tbl"
     if origin_city != None and origin_city != "":
-        sql_query = sql_query + " AND ORIGIN_CITY_NAME = '" + origin_city + "'";
+        sql_query = sql_query + " WHERE ORIGIN_CITY_NAME = '" + origin_city + "'";
     if dest_city != None and dest_city != "":
         sql_query = sql_query + " AND DEST_CITY_NAME = '" + dest_city + "'";
     sql_query = sql_query + " GROUP BY MONTH "
@@ -128,8 +128,8 @@ def delay_prediction(start_date, carrier, source, destination):
     return json.dumps([0])
 
 
-def query_delay_statistics(start_date, end_date, airline_id=None, origin_city=None, dest_city=None):
-    df = Delay_Statistics(start_date, end_date, airline_id, origin_city, dest_city)
+def query_delay_statistics(start_date, end_date, carrier=None, origin_city=None, dest_city=None):
+    df = Delay_Statistics(start_date, end_date, carrier, origin_city, dest_city)
     return json_converter_helper(df)
 
 
