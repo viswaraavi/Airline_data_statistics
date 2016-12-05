@@ -98,7 +98,8 @@ def CarrierWithMaximumCancelledFlights(start_date,end_date,origin_city = None,de
                 ORDER BY CANCELLED_TOTAL desc\
                 LIMIT 10";   
     
-    return spark.sql(sql_query)      
+    return spark.sql(sql_query) 
+     
 
 def CarrierWithMaximumAirTime(start_date,end_date):
    
@@ -107,6 +108,18 @@ def CarrierWithMaximumAirTime(start_date,end_date):
             WHERE FL_DATE >='"+start_date +"' AND FL_DATE<='" + end_date + "'"
     sql_query = sql_query + "ORDER BY CAST(Air_Time AS INT) desc limit 10"
     return spark.sql(sql_query)
+
+def MostDelaysByMonth(origin_city = None,dest_city = None):
+   
+    sql_query =  "SELECT MONTH, AVG(ARR_DELAY_NEW) as ARR_DELAY_AVG , AVG(DEP_DELAY_NEW) AS DEP_DELAY_AVG \
+            FROM airline_tbl"
+    if origin_city !=None and origin_city !="":
+        sql_query = sql_query + " AND ORIGIN_CITY_NAME = '" + origin_city + "'";
+    if dest_city !=None and dest_city !="":
+        sql_query = sql_query + " AND DEST_CITY_NAME = '" + dest_city + "'";
+    sql_query = sql_query + " GROUP BY MONTH "
+        
+    return spark.sql(sql_query) 
 
 def query_delay_statistics(start_date,end_date,airline_id=None, origin_city=None, dest_city=None):
     df=Delay_Statistics(start_date,end_date, airline_id, origin_city, dest_city)
@@ -125,6 +138,10 @@ def query_carriers_with_max_CF(start_date,end_date,origin_city = None,dest_city 
 def query_carriers_with_max_airtime(start_date,end_date):
 
     df=CarrierWithMaximumAirTime(start_date,end_date)
+    return json_converter_helper(df)
+
+def query_most_delays_by_months(origin_city = None,dest_city = None):
+    df=MostDelaysByMonth(origin_city = None,dest_city = None)
     return json_converter_helper(df)
 
     

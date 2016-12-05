@@ -92,6 +92,12 @@ def get_air_time():
     end_date = request.args.get('ed')
     return airline_queries.query_carriers_with_max_airtime(start_date, end_date)
 
+@app.route('/delay_month/', methods=['GET'])
+def get_delay_month():
+    origin_city = request.args.get('oc')
+    destination_city = request.args.get('dc')
+    return airline_queries.query_most_delays_by_months(origin_city, destination_city)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
