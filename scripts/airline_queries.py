@@ -41,7 +41,6 @@ def json_converter_helper(df):
         count = count + 1
         if count < len(list1):
             json_string = json_string + ","
-    print json_string
     return json.dumps(json_string).replace("\\","")
 
 

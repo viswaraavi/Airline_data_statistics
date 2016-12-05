@@ -11,22 +11,22 @@ dc = destination city
 
 Delay statistics:
 
-http://ec2-54-226-213-231.compute-1.amazonaws.com/delay_statistics/?sy=2011&ey=2011&sm=1&em=2&cr=ER&oc=Raleigh&dc=Seattle
+http://ec2-54-226-213-231.compute-1.amazonaws.com/delay_statistics/?sd=2011-01-01&ed=2011-03-31&cr=ER&oc=Raleigh&dc=Seattle
 
 
 Most delays by carrier
 
 
-http://ec2-54-226-213-231.compute-1.amazonaws.com/delay_carrier/?sy=2011&ey=2011&sm=1&em=2&oc=Raleigh&dc=Seattle
+http://ec2-54-226-213-231.compute-1.amazonaws.com/delay_carrier/?sd=2011-01-01&ed=2011-03-31&oc=Raleigh&dc=Seattle
 
 
 Carriers with maximum cancelled flights
 
 
-http://ec2-54-226-213-231.compute-1.amazonaws.com/most_cancelled/?sy=2011&ey=2011&sm=1&em=2&oc=Raleigh&dc=Seattle
+http://ec2-54-226-213-231.compute-1.amazonaws.com/most_cancelled/?sd=2011-01-01&ed=2011-03-31&oc=Raleigh&dc=Seattle
 
 
 Carriers with maximum air time
 
 
-http://ec2-54-226-213-231.compute-1.amazonaws.com/air_time/?sy=2011&ey=2011&sm=1&em=2
+http://ec2-54-226-213-231.compute-1.amazonaws.com/air_time/?sd=2011-01-01&ed=2011-03-31

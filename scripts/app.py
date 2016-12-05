@@ -52,10 +52,8 @@ def create_task():
 
 @app.route('/delay_statistics/', methods=['GET'])
 def get_delay_statistics():
-    start_year = request.args.get('sy')
-    start_month = request.args.get('sm')
-    end_year = request.args.get('ey')
-    end_month = request.args.get('em')
+    start_date = request.args.get('sd')
+    end_date = request.args.get('ed')
     carrier = request.args.get('cr')
     origin_city = request.args.get('oc')
     destination_city = request.args.get('dc')
@@ -66,39 +64,33 @@ def get_delay_statistics():
 #    print request.args.get('cr')
 #    print request.args.get('oc')
 #    print request.args.get('dc')
-    return airline_queries.query_delay_statistics(start_year, end_year, start_month, end_month, carrier, origin_city, destination_city)
+    return airline_queries.query_delay_statistics(start_date, end_date, carrier, origin_city, destination_city)
 
 
 @app.route('/delay_carrier/', methods=['GET'])
 def get_delay_carrier():
-    start_year = request.args.get('sy')
-    start_month = request.args.get('sm')
-    end_year = request.args.get('ey')
-    end_month = request.args.get('em')
+    start_date = request.args.get('sd')
+    end_date = request.args.get('ed')
     origin_city = request.args.get('oc')
     destination_city = request.args.get('dc')
-    return airline_queries.query_most_delay_by_carriers(start_year, end_year, start_month, end_month, origin_city, destination_city)
+    return airline_queries.query_most_delay_by_carriers(start_date, end_date, origin_city, destination_city)
 
 
 
 @app.route('/most_cancelled/', methods=['GET'])
 def get_most_cancelled():
-    start_year = request.args.get('sy')
-    start_month = request.args.get('sm')
-    end_year = request.args.get('ey')
-    end_month = request.args.get('em')
+    start_date = request.args.get('sd')
+    end_date = request.args.get('ed')
     origin_city = request.args.get('oc')
     destination_city = request.args.get('dc')
-    return airline_queries.query_carriers_with_max_CF(start_year, end_year, start_month, end_month, origin_city, destination_city)
+    return airline_queries.query_carriers_with_max_CF(start_date, end_date, origin_city, destination_city)
 
 
 @app.route('/air_time/', methods=['GET'])
 def get_air_time():
-    start_year = request.args.get('sy')
-    start_month = request.args.get('sm')
-    end_year = request.args.get('ey')
-    end_month = request.args.get('em')
-    return airline_queries.query_carriers_with_max_airtime(start_year, end_year, start_month, end_month)
+    start_date = request.args.get('sd')
+    end_date = request.args.get('ed')
+    return airline_queries.query_carriers_with_max_airtime(start_date, end_date)
 
 
 if __name__ == '__main__':
