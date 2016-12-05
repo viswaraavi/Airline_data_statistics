@@ -99,7 +99,7 @@ def MostDelaysByMonth(origin_city = None,dest_city = None):
     sql_query =  "SELECT MONTH, AVG(ARR_DELAY_NEW) as ARR_DELAY_AVG , AVG(DEP_DELAY_NEW) AS DEP_DELAY_AVG \
             FROM airline_tbl"
     if origin_city !=None and origin_city !="":
-        sql_query = sql_query + " AND ORIGIN_CITY_NAME = '" + origin_city + "'";
+        sql_query = sql_query + " WHERE ORIGIN_CITY_NAME = '" + origin_city + "'";
     if dest_city !=None and dest_city !="":
         sql_query = sql_query + " AND DEST_CITY_NAME = '" + dest_city + "'";
     sql_query = sql_query + " GROUP BY MONTH "
