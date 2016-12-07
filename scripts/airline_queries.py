@@ -35,14 +35,14 @@ spark = SparkSession.builder \
 #df = spark.read.parquet("s3n://csc591-dic-airline-data/super_reduced_dataset")
 
 #for full dataset
-df = spark.read.parquet("s3n://csc591-dic-airline-data/super_reduced_dataset_all")
+df = spark.read.parquet("s3n://csc591-dic-airline-full/super_reduced_dataset_all")
 
 df.createOrReplaceTempView("airline_tbl")
 
 
 # model=RandomForestModel.load(spark, "target/tmp/myRandomForestRegressionModel")
 
-model=RandomForestModel.load(spark, "s3n://csc591-dic-airline-data/randomforestmodel")
+model=RandomForestModel.load(spark, "s3n://csc591-dic-airline-full/randomforestmodel")
 carries_list=pickle.load(open("carriers","rb"))
 source_list=pickle.load(open("source","rb"))
 destination_list=pickle.load(open("destination","rb"))
